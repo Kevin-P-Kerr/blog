@@ -1,0 +1,60 @@
+What I want to investigate here are the ways in which javascript is capable of describing itself.  I don't mean the ways in which javascript is capable of describing the algorithms by which javascript statements and expressions are evaluated.  I mean the ways in which collections of javascript statements and expressions--that is, javascript programs--are capable of describing other themselves. In short, I am interested in the extent to which javascript programs can be self-reflevtive.
+
+Why this interest?  Because it seems self-descriptive programs are more likely to be correct programs.  For example, a function with a type signature is more likely to be correct than one that isn't.  Consider,
+
+	int foo (int *bar) {...}
+vs
+	foo (n){...}
+
+The former employs c style type declarations: perhaps the program is incorrect, but at least it will always return the correct type of thing, if an int is indeed the correct type of thing in a particular case.  And at least a consumer of an API can read the appropiate header file and see just what needs to be passed into a particular function.  Type declartions, then, function as a meta language that the compiler can usee to ensure type safety and that programmers can use to communicate with each other.  It is a weakness of javascript that it lacks such a system.
+
+It is not an fatal weakness, obviously.  There are thousands of live javasript applications in production right now--not to mention all the php, scheme, and python applications that have been produced without the benefit of a type system.  And many C programs abuse the language's type system to the point that it is essentially meaningless.
+
+Still, though, it would be nice to have a way to talk about program behavior in the terms in which the procedures that consititue the program itself are describes.  Take the following program, which describes fibonacci:
+
+var fib = (function () {
+	var fib_seq = [0,1];
+	return function (n) {
+		if (fib_seq[n] || n === 0) {
+			return fib_seq[n];
+		}
+		fib_seq[n] = fib(n-1) + fib(n-2);
+		return fib_seq[n];
+	};
+})();
+
+Is this program correct?  It seems to be--test it and you can see the familar sequence 0,1,1,3,5,8,13... etc.  But how do we know it's right?
+
+Well, one answer is that the program is correct if--for some predetermined input--I get some expected output.  If, for example, I have a list of the first 100 fibonacci numbers, and I run the program for inputs 0-99 and get the answers I expect, the program is correct.  But this is a pretty useless way of doing things, unless I'm a teacher, grading my students.  If I have the answers--then why ask the question.  Why not just implement an array or a map that returns the precomputed answers?  Really, we run computations to resolve questions the answers to which we don't know in advance--whether that is the 101st fibonacci number, or the html view a client with a particular cookie should see rendered in her browser.
+
+Now I can see the point of view of advocates of bdd or tdd methodologies, that think such tests are pretty much the right answer for languages like javascript, and maybe even for languages with really strong type systems.  Their argument, I think, goes something like this:  Sure, it is true that any given test is going to be finite in scope, while the potential input into a function is--in theory, if not in practice--limitless.  But, the more tests a function passes, the greater inductive confidence we can have that it is infact implemented correctly. Furthermore, even in cases where a langugae follows a strict typesystem, runtime correcness cannot be implied by compilation alone.  Just because the function fib returns an integer, doesn't mean it returns the appropiate value in the fibonacci sequence; and simply because every caller of fib passes in an int doesn't mean the caller truly wants a member of the fibonacci sequence.  Runtime tests give us confidence the behavior the program is in fact correct. 
+
+Clearly, propnents of testing are on to something.  In the same way that small functions that do one thing well are the best way to prevent bugs, testing software is the best way to find them.  I don't think anyone would want to dispute that; I don't think anyone, unless they're really malicious, hands software to a consumer without having tested it, at least in some informal, preliminary way.  I think a great deal of programming is basically testing small functions in this way, and building out from there.  [JWZ QUOTE]
+
+So one way to describe our software in the language in which we implement it (in this case, javascript) is by writing test cases out which the software must pass.  But I don't unit tests are a very good way to describe our code--in the end they're just lists of particular behaviors the program will exhibit under particular circumstances.  We may know a program passed a particular, but we don't really know what that signifies.
+
+Take the case of the fibonacci program above: if I have a list of the first 100 fibonacci numbers, and the program reproduces that list, I can be confident that the program is correct.  But I can really only be confident if I know in advance what the fibonacci sequence is: otherwise I really have no clue.  Perhaps the function is implemented this way:
+	var fib = function (n) {
+		if (n === 0) {
+			return 0;
+		}
+		if (n === 1) {
+			return 1;
+		}
+		if (n > 100) {
+			return 3;
+		}
+		return fib(n-1) + fib(n+1);
+	};
+
+If I don't know what fibonacci is, and I just have a list of the first 100 fibonacci numbers, I may think this function is fine, when in fact it is not.  Of course, most programmers are familar with the fibonacci sequence.  In fact, it is likely that the same programmer that wrote this code would also write the test for it.  How would one write a test for such a program.  One way to is to take the output of another fibonacci program, that one already knows is correct.  But down that path lies a regress.  How do we know the model program is correct?  Another way is for the programmer to explicitly calculate the first 100 fibonacci numbers, and then base a test off of those.  But how does she know the first 100 fibonacci numbers?  Because she has some idea of how to describe the sequence: the fibonacci sequence is a sequence of positive integers such that each member is equal to the sum of the prior two.  Or something like that--it's not a formal definition.  It's just a way of taking describing fibonacci in everyday English.
+
+If this seems unlikely, consider this example:  Our programmer is given an assignment: implement a system that takes an input, and logs that input to the database.  That's enough to go on, isn't it?
+
+var db = require('dbBindings');
+
+var dayJob = function (input) {
+	db.myTable.update(input);
+}
+
+Simple.  To test this program, she decides to write a test suite. Sure enough, for the range of input she provides, the program works.  It seems to be correct.  But it seems like we're stuck in a limbo here;  one the one hand we have to very precise descriptions, one of a program, and the other of it's desired behavior; one the other we have a relatively vauge description from the project manager, to shove some input into the db.  
