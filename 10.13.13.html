@@ -12,7 +12,13 @@
 			<a href="http://www.joelonsoftware.com/articles/Unicode.html" target="_blank"> Joel Spolsky: The Absolute Minimum Every Software Developer Absolutely, Positively Must Know About Unicode and Character Sets </a>
 		</h2>
 		<p>
-			I've been dismayed to discover just how many software developers aren't really completely up to speed on the mysterious world of character sets, encodings, Unicode, all that stuff...[Most programmers wish] it would all blowever somehow. <a href="http://www.joelonsoftware.com/articles/Unicode.html" target="_blank"> Continue Reading ...</a>
+			I've been dismayed to discover just how many software developers aren't really completely up to speed on the mysterious world of character sets, encodings, Unicode, all that stuff...[Most programmers wish] it would all blowever somehow.
+		</p>
+		<p> Back in the semi-olden days, when Unix was being invented and K&R were writing The C Programming Language, everything was very simple. EBCDIC was on its way out. The only characters that mattered were good old unaccented English letters, and we had a code for them called ASCII which was able to represent every character using a number between 32 and 127.
+		</p>
+		<p> Eventually this OEM free-for-all got codified in the ANSI standard. In the ANSI standard, everybody agreed on what to do below 128, which was pretty much the same as ASCII, but there were lots of different ways to handle the characters from 128 and on up, depending on where you lived. These different systems were called code pages. So for example in Israel DOS used a code page called 862, while Greek users used 737. They were the same below 128 but different from 128 up, where all the funny letters resided...But still, most people just pretended that a byte was a character and a character was 8 bits and as long as you never moved a string from one computer to another, or spoke more than one language, it would sort of always work. But of course, as soon as the Internet happened, it became quite commonplace to move strings from one computer to another, and the whole mess came tumbling down. Luckily, Unicode had been invented.
+	</p>
+	<p> In Unicode, a letter maps to something called a code point which is still just a theoretical concept...that's where encodings come in...thus was invented the brilliant concept of UTF-8...There are acutally a bunch of otherways to of encoding Unicode...It does not make sense to have a string without knowing what type of encoding it uses.  You can no longer stick your head in the sand and pretend plain text is ASCII: There ain't no such thing as plain text <a href="http://www.joelonsoftware.com/articles/Unicode.html" target="_blank"> Continue Reading ...</a>
 		</p>
 	</div>
 	<div>
@@ -26,7 +32,7 @@
 		<p>
 		Provisionally, it looks like the following: In a little over a week, the shutdown has increased the probability of a Democratic House takeover in 2014 from 13% to as high as 50%.
 		</p>
-		<p> the shutdown, combined with the fluidity of gerrymandered districts, has added a highly unexpected twist. The 50% figure could swing back toward the Republicans, or it could go further toward the Democrats. <a href="http://election.princeton.edu/2013/10/10/a-prediction-for-2014-house-elections-take-1/"> Continue Reading ... </a>
+		<p> ...the shutdown, combined with the fluidity of gerrymandered districts, has added a highly unexpected twist. The 50% figure could swing back toward the Republicans, or it could go further toward the Democrats. <a href="http://election.princeton.edu/2013/10/10/a-prediction-for-2014-house-elections-take-1/"> Continue Reading ... </a>
 		</p>
 	</div>
 </ul>
