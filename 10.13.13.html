@@ -45,6 +45,91 @@
 	<p> The UTF encoding has several good properties. By far the most important is that a byte in the ASCII range 0-127 represents itself in UTF. Thus UTF is backward compatible with ASCII. UTF has other advantages. It is a byte encoding and is therefore byte-order independent. ASCII control characters appear in the byte stream only as themselves, never as an element of a sequence encoding another character, so newline bytes separate
 lines of UTF text. Finally, ANSI Cs strcmp function applied to UTF strings preserves the ordering of Unicode characters </p>
 	</div>
+	<div>
+	<h2>
+		<a href="http://en.wikipedia.org/wiki/UTF-8"> Wikipedia: A Description of Utf-8 </a>
+		<h2><span class="mw-headline" id="Description">Description</span><span class="mw-editsection"><span class="mw-editsection-bracket">[</span><a href="/w/index.php?title=UTF-8&amp;action=edit&amp;section=2" title="Edit section: Description">edit</a><span class="mw-editsection-bracket">]</span></span></h2><p>The design of UTF-8 can be seen in this table of the scheme as originally proposed by Dave Prosser and subsequently modified by Ken Thompson (the <code>x</code>s are replaced by the bits of the code point):</p><table class="wikitable">
+<tbody><tr>
+<th>Bits of<br>
+code point</th>
+<th>First<br>
+code point</th>
+<th>Last<br>
+code point</th>
+<th>Bytes in<br>
+sequence</th>
+<th>Byte 1</th>
+<th>Byte 2</th>
+<th>Byte 3</th>
+<th>Byte 4</th>
+<th>Byte 5</th>
+<th>Byte 6</th>
+</tr>
+<tr>
+<th>&nbsp;&nbsp;7</th>
+<td>U+0000</td>
+<td>U+007F</td>
+<td style="text-align: center;">1</td>
+<td><code>0xxxxxxx</code></td>
+</tr>
+<tr>
+<th>11</th>
+<td>U+0080</td>
+<td>U+07FF</td>
+<td style="text-align: center;">2</td>
+<td><code>110xxxxx</code></td>
+<td><code>10xxxxxx</code></td>
+</tr>
+<tr>
+<th>16</th>
+<td>U+0800</td>
+<td>U+FFFF</td>
+<td style="text-align: center;">3</td>
+<td><code>1110xxxx</code></td>
+<td><code>10xxxxxx</code></td>
+<td><code>10xxxxxx</code></td>
+</tr>
+<tr>
+<th>21</th>
+<td>U+10000</td>
+<td>U+1FFFFF</td>
+<td style="text-align: center;">4</td>
+<td><code>11110xxx</code></td>
+<td><code>10xxxxxx</code></td>
+<td><code>10xxxxxx</code></td>
+<td><code>10xxxxxx</code></td>
+</tr>
+<tr>
+<th>26</th>
+<td>U+200000</td>
+<td>U+3FFFFFF</td>
+<td style="text-align: center;">5</td>
+<td><code>111110xx</code></td>
+<td><code>10xxxxxx</code></td>
+<td><code>10xxxxxx</code></td>
+<td><code>10xxxxxx</code></td>
+<td><code>10xxxxxx</code></td>
+</tr>
+<tr>
+<th>31</th>
+<td>U+4000000</td>
+<td>U+7FFFFFFF</td>
+<td style="text-align: center;">6</td>
+<td><code>1111110x</code></td>
+<td><code>10xxxxxx</code></td>
+<td><code>10xxxxxx</code></td>
+<td><code>10xxxxxx</code></td>
+<td><code>10xxxxxx</code></td>
+<td><code>10xxxxxx</code></td>
+</tr>
+</tbody></table><p>The original specification covered numbers up to 31 bits (the original limit of the <a href="/wiki/Universal_Character_Set" title="Universal Character Set">Universal Character Set</a>). In November 2003 UTF-8 was restricted by <a class="external mw-magiclink-rfc" rel="nofollow" href="//tools.ietf.org/html/rfc3629">RFC 3629</a> to end at U+<code>10FFFF</code>, in order to match the constraints of the <a href="/wiki/UTF-16" title="UTF-16">UTF-16</a> character encoding. This removed all 5- and 6-byte sequences, and about half of the 4-byte sequences.</p><ol>
+<li>One-byte codes are used only for the ASCII values 0 through 127. In this case the UTF-8 code has the same value as the ASCII code. The high-order bit of these codes is always 0.</li>
+<li>Code points larger than 127 are represented by multi-byte sequences, composed of a <i>leading byte</i> and one or more <i>continuation bytes</i>. The leading byte has two or more high-order 1s followed by a 0, while continuation bytes all have '10' in the high-order position.</li>
+<li>The number of high-order 1s in the leading byte of a multi-byte sequence indicates the number of bytes in the sequence, so that the length of the sequence can be determined without examining the continuation bytes.</li>
+<li>The remaining bits of the encoding are used for the bits of the code point being encoded, padded with high-order 0s if necessary. The high-order bits go in the lead byte, lower-order bits in succeeding continuation bytes. The number of bytes in the encoding is the minimum required to hold all the significant bits of the code point.</li>
+<li>Single bytes, leading bytes, and continuation bytes do not share values. This makes the scheme <a href="/wiki/Self-synchronizing_code" title="Self-synchronizing code">self-synchronizing</a>, allowing the start of a character to be found by backing up at most five bytes (three bytes in actual UTF‑8 as explained below).</li>
+</ol><p>The first 128 characters (US-ASCII) need one byte. The next 1,920 characters need two bytes to encode. This covers the remainder of almost all <a href="/wiki/Latin-derived_alphabet" title="Latin-derived alphabet">Latin-derived alphabets</a>, and also <a href="/wiki/Greek_alphabet" title="Greek alphabet">Greek</a>, <a href="/wiki/Cyrillic_script" title="Cyrillic script">Cyrillic</a>, <a href="/wiki/Coptic_alphabet" title="Coptic alphabet">Coptic</a>, <a href="/wiki/Armenian_alphabet" title="Armenian alphabet">Armenian</a>, <a href="/wiki/Hebrew_alphabet" title="Hebrew alphabet">Hebrew</a>, <a href="/wiki/Arabic_alphabet" title="Arabic alphabet">Arabic</a>, <a href="/wiki/Syriac_alphabet" title="Syriac alphabet">Syriac</a> and <a href="/wiki/T%C4%81na" title="Tāna" class="mw-redirect">Tāna</a> alphabets, as well as <a href="/wiki/Combining_Diacritical_Marks" title="Combining Diacritical Marks">Combining Diacritical Marks</a>. Three bytes are needed for characters in the rest of the <a href="/wiki/Mapping_of_Unicode_character_planes" title="Mapping of Unicode character planes" class="mw-redirect">Basic Multilingual Plane</a> (which contains virtually all characters in common use<sup id="cite_ref-unicode-ch02-bmp_11-0" class="reference"><a href="#cite_note-unicode-ch02-bmp-11"><span>[</span>11<span>]</span></a></sup>). Four bytes are needed for characters in the <a href="/wiki/Mapping_of_Unicode_characters" title="Mapping of Unicode characters">other planes of Unicode</a>, which include less common <a href="/wiki/CJK_characters" title="CJK characters">CJK characters</a> and various historic scripts and mathematical symbols.</p>
+	</div>
 </ul>
 </body>
 </html>
