@@ -1,0 +1,21 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />	
+	<title> 10-14-2013 </title>
+</head>
+<body>
+<h1> Noted For October 14th, 2013 </h1>
+<ul>
+<div>
+	<h2>
+		<a href="http://www.devttys0.com/2013/10/reverse-engineering-a-d-link-backdoor/"> /dev/ttyS0: Reverse Engineering a D-Link Backdoor </a>
+	</h2>
+	<p> On a whim I downloaded firmware v1.13 for the DIR-100 revA. Binwalk quickly found and extracted a SquashFS file system, and soon I had the firmware’s web server (/bin/webs) loaded into IDA...</p>
+	<p> We can see that alpha_auth_check is passed one argument (whatever is stored in register $s2); if alpha_auth_check returns -1 (0xFFFFFFFF), the code jumps to the end of alpha_httpd_parse_request, otherwise it continues processing the request. Some further examination of the use of register $s2 prior to the alpha_auth_check call indicates that it is a pointer to a data structure which contains char* pointers to various pieces of the received HTTP request, such as HTTP headers and the requested URL...</p>
+	<p> alpha_auth_check performs a strcmp between the string pointer at offset 0xDO inside the http_request_t structure and the string "xmlset_roodkcableoj28840ybtide"; if the strings match, the check_login function is skipped alpha_auth_check returns 1...A quick Google for the “xmlset_roodkcableoj28840ybtide” string turns up only a single Russian forum post from a few years ago, which notes that this is an “interesting line” inside the /bin/webs binary. I’d have to agree.</p>
+	<p> So what is this mystery string getting compared against? It turns out that the pointer at offset 0xD0 in the http_request_t structure is populated by the httpd_parse_request function: [It turns out that the field points to the user-agent request header]. In other words, if your browser’s user agent string is “xmlset_roodkcableoj28840ybtide” (no quotes), you can access the web interface without any authentication and view/change the device settings </p>
+</div>
+</ul>
+</body>
+</html>
+
