@@ -1,0 +1,37 @@
+Let's construct a simple algebra of probabilites.
+
+First, let's define a set Confidence = {C,V,S,I} where
+C = certain
+V = very
+S = somewhat
+I = indifferent
+
+Then define a set L = {Cx"-"}, so we can get lack of confidence.
+
+Then define addition and multiplication on L.  
+
+First, we define addition. 
+
+C is the unit of addition.  Then, every element of L has an inverse, namely
+
+forall x:L, x+-x=C.
+
+However, we don't allow for addition of "positive" probabilities.  + in LxL is injective, but not bijective.
+
+Additionally, -I = I.
+
+So, 
+
+V = -S+-S 
+S = -V+-V
+I = -V+-S
+
+Then to multiply elements, we use this table
+
+C  V  S  I
+V  S  I  -S
+S  I  -S -V
+I  -S -V  -V
+
+
+

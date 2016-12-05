@@ -1,0 +1,22 @@
+Thinking about taxation without representation.
+
+Reading this article in the nyt (http://www.nytimes.com/2016/12/03/opinion/sunday/why-blue-states-are-the-real-tea-party.html?action=click&pgtype=Homepage&clickSource=story-heading&module=opinion-c-col-left-region&region=opinion-c-col-left-region&WT.nav=opinion-c-col-left-region&_r=0) got me thinking.
+
+Take this provocative quote: 
+This was always a betrayal of one-person-one-vote equality, in that a voter in rural Wyoming has more than three times the power of a voter in New Jersey, the country’s most densely populated state. But those imbalances have become far more glaring, thanks to a filter bubble more pronounced than anything on Facebook: the “big sort” that has concentrated Democrats in cities and inner-ring suburbs, and Republicans in exurbs and rural counties.
+
+That is, as our cities have gotten bigger and more blue, their residents have found themselves more taxed and less represented.  
+
+This raises some interesting questions.
+
+1) Is this true?  That is, do urban voters have lower net tax outlays and less voting power now than they did in, say, 1940?  
+2) Is it just when less efficiently distributed communities have less voting power.
+
+For the first question, we can actually arrive at an answer.
+
+First, derive a "political representation" score--say avg(urban cong. dist. size)/avg(congressional district size).  
+Then, derive an idea of the average net federal tax outlay per urban area.  
+
+Then see if these two scores move in relation to one another.  That would indicate if urban areas were taxed more with less representation.
+
+
