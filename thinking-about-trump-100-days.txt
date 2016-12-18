@@ -86,4 +86,13 @@ the next nine are very concrete
 1) What counts as middle class?
 
 The cbo shows that the median household tax bill in 2013 was about 8900. https://www.cbo.gov/sites/default/files/cbofiles/images/pubs-images/51xxx/51361-land-table1.png.  Will it be about 6 grand in 2017 or 2018?  I could see that as the political cover needed for much larger tax cuts up the income scale. 
- 
+
+2)  The constraint here is again congress.  
+
+    He will either need to get a litle Dem support and lose no republican support, or get alot of Dem support.
+
+    So the possible outcomes are:
+      (a) huge victory: much dem support and little drop off in republican support
+      (b) narrow victory: alot of dem support, with corresponding drop off in republican support, but not enough to prevent the bill from passing
+      (c) narrow loss: alot of dem support, with corresponding drop off in republican support, and the bill dies
+      (d) narrow loss
